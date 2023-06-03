@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"bytes"
 	"encoding/json"
 	"strconv"
 
@@ -34,11 +35,16 @@ func InsertCategory(body string, user string) (int, string) {
 		return 400, "An error happened when inserting the category" + category.CategName + " > " + queryError.Error()
 	}
 
-	resultString := "{ CategID: " + strconv.Itoa(int(result)) + " }"
-	response, indentErr := json.MarshalIndent(resultString, "", "    ")
-	if indentErr != nil {
-		return 400, "An error happened trying to format the JSON response"
-	}
+	stringResult := jsonPrettyPrint("{ CategID: " + strconv.Itoa(int(result)) + " }")
 
-	return 200, string(response)
+	return 200, string(stringResult)
+}
+
+func jsonPrettyPrint(in string) string {
+	var out bytes.Buffer
+	err := json.Indent(&out, []byte(in), "", "\t")
+	if err != nil {
+		return in
+	}
+	return out.String()
 }
