@@ -55,11 +55,12 @@ func AddressesHandler(body string, path string, method string, user string, id i
 }
 
 func CategoriesHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	fmt.Println("Handling request with Categories Handler" + " > " + method)
 	switch method {
-	case "POST": 
+	case "POST":
 		return routers.InsertCategory(body, user)
 	}
-	
+
 	return 400, "Invalid method"
 }
 
