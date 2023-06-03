@@ -20,18 +20,18 @@ func Handlers(path string, method string, body string, headers map[string]string
 		return statusCode, user
 	}
 
-	switch path[1:4] {
-	case "user":
+	switch path {
+	case "/user":
 		return UsersHandler(body, path, method, user, id, request)
-	case "prod":
+	case "/products":
 		return ProductsHandler(body, path, method, user, idn, request)
-	case "stock":
+	case "/stocks":
 		return StocksHandler(body, path, method, user, idn, request)
-	case "addr":
+	case "/address":
 		return AddressesHandler(body, path, method, user, idn, request)
-	case "cate":
+	case "/category":
 		return CategoriesHandler(body, path, method, user, idn, request)
-	case "orde":
+	case "/orders":
 		return OrdersHandler(body, path, method, user, idn, request)
 	}
 
