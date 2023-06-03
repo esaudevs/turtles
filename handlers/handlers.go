@@ -6,6 +6,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/esaudevs/turtles/auth"
+	"github.com/esaudevs/turtles/routers"
 )
 
 func Handlers(path string, method string, body string, headers map[string]string, request events.APIGatewayV2HTTPRequest) (int, string) {
@@ -54,6 +55,11 @@ func AddressesHandler(body string, path string, method string, user string, id i
 }
 
 func CategoriesHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	switch method {
+	case "POST": 
+		return routers.InsertCategory(body, user)
+	}
+	
 	return 400, "Invalid method"
 }
 

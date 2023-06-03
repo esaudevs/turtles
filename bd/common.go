@@ -46,3 +46,33 @@ func ConnStr(key models.SecretRDSJson) string {
 	fmt.Println(dsn)
 	return dsn
 }
+
+func IsUserAdmin(userUUID string) (bool, string) {
+	fmt.Println("Starting IsUserAdmin")
+
+	err := DbConnect()
+	if err != nil {
+		return false, err.Error()
+	}
+
+	defer Db.Close()
+
+	query := "SELECT 1 FROM users WHERE User_UUID = '" + userUUID + "' AND User_Status = 0"
+	fmt.Println(query)
+
+	rows, err := Db.Query(query)
+	if err != nil {
+		return false, err.Error()
+	}
+
+	var value string
+	rows.Next()
+	rows.Scan(&value)
+
+	fmt.Println("IsUserAdmin > Sucessfully - value returned: " + value)
+	if value == "1" {
+		return true, ""
+	}
+
+	return false, "User has not admin privileges"
+}
