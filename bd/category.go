@@ -18,7 +18,7 @@ func InsertCategory(category models.Category) (int64, error) {
 
 	defer Db.Close()
 
-	query := "INSER INTO category (Categ_Name, Categ_Path) VALUES ('" + category.CategName + "','" + category.CategPath + "')"
+	query := "INSERT INTO category (Categ_Name, Categ_Path) VALUES ('" + category.CategName + "','" + category.CategPath + "')"
 
 	var result sql.Result
 	result, err = Db.Exec(query)
