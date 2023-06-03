@@ -34,5 +34,11 @@ func InsertCategory(body string, user string) (int, string) {
 		return 400, "An error happened when inserting the category" + category.CategName + " > " + queryError.Error()
 	}
 
-	return 200, "{ CategID: " + strconv.Itoa(int(result)) + " }"
+	resultString := "{ CategID: " + strconv.Itoa(int(result)) + " }"
+	response, indentErr := json.MarshalIndent(resultString, "", "    ")
+	if indentErr != nil {
+		return 400, "An error happened trying to format the JSON response"
+	}
+
+	return 200, string(response)
 }
