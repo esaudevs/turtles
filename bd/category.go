@@ -112,10 +112,10 @@ func SelectCategories(CategId int, Slug string) ([]models.Category, error) {
 	query := "SELECT Categ_Id, Categ_Name, Categ_Path FROM category"
 
 	if CategId > 0 {
-		query += "WHERE Categ_Id = " + strconv.Itoa(CategId)
+		query += " WHERE Categ_Id = " + strconv.Itoa(CategId)
 	} else {
 		if len(Slug) > 0 {
-			query += "WHERE Categ_Path LIKE '%" + Slug + "%'"
+			query += " WHERE Categ_Path LIKE '%" + Slug + "%'"
 		}
 	}
 
