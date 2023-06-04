@@ -2,6 +2,7 @@ package tools
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -10,4 +11,10 @@ func MySQLDate() string {
 	return fmt.Sprintf(
 		"%d-%02d-%02dT%02d:%02d:%02d",
 		t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
+}
+
+func EscapeString(s string) string {
+	desc := strings.ReplaceAll(s, "'", "")
+	desc = strings.ReplaceAll(desc, "\"", "")
+	return desc
 }

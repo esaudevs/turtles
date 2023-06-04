@@ -59,6 +59,12 @@ func CategoriesHandler(body string, path string, method string, user string, id 
 	switch method {
 	case "POST":
 		return routers.InsertCategory(body, user)
+	case "PUT":
+		return routers.UpdateCategory(body, user, id)
+	case "DELETE":
+		return routers.DeleteCategory(user, id)
+	case "GET":
+		return routers.SelectCategories(body, request)
 	}
 
 	return 400, "Invalid method"
