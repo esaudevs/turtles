@@ -46,12 +46,8 @@ func UpdateCategory(body string, user string, id int) (int, string) {
 		return 400, "Error in data received" + err.Error()
 	}
 
-	if len(category.CategName) == 0 {
-		return 400, "Category name needed"
-	}
-
-	if len(category.CategPath) == 0 {
-		return 400, "Category path needed"
+	if len(category.CategName) == 0 && len(category.CategPath) == 0 {
+		return 400, "Category name or path are needed"
 	}
 
 	isAdmin, errorMessage := bd.IsUserAdmin(user)
