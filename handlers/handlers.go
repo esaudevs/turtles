@@ -75,8 +75,8 @@ func OrdersHandler(body string, path string, method string, user string, id int,
 }
 
 func IsAuthValid(path string, method string, headers map[string]string) (bool, int, string) {
-	if (path == "product" && method == "GET") ||
-		(path == "category" && method == "GET") {
+	if (path == "/product" && method == "GET") ||
+		(path == "/category" && method == "GET") {
 		return true, 200, ""
 	}
 
