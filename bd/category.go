@@ -123,6 +123,9 @@ func SelectCategories(CategId int, Slug string) ([]models.Category, error) {
 
 	var rows *sql.Rows
 	rows, err = Db.Query(query)
+	if err != nil {
+		return Categories, err
+	}
 
 	for rows.Next() {
 		var category models.Category
