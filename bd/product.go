@@ -156,8 +156,8 @@ func SelectProduct(product models.Product, choice string, page int, pageSize int
 	var queryCount string
 	var where, limit string
 
-	query = "SELECT Prod_Id, Prod_Title, Prod_Description, Prod_CreatedAt, Prod_Updated, Prod_Price, Prod_Path, Prod_CategoryId, Prod_Stock FROM products"
-	queryCount = "SELECT count(*) as items FROM products"
+	query = "SELECT Prod_Id, Prod_Title, Prod_Description, Prod_CreatedAt, Prod_Updated, Prod_Price, Prod_Path, Prod_CategoryId, Prod_Stock FROM products "
+	queryCount = "SELECT count(*) FROM products "
 
 	switch choice {
 	case "P":
@@ -178,16 +178,22 @@ func SelectProduct(product models.Product, choice string, page int, pageSize int
 
 	var rows *sql.Rows
 	rows, err = Db.Query(queryCount)
-	defer rows.Close()
 
 	if err != nil {
 		fmt.Println(err.Error())
 		return resp, err
 	}
 
+	defer rows.Close()
+
 	rows.Next()
 	var regs sql.NullInt32
 	err = rows.Scan(&regs)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return resp, err
+	}
 
 	items := int(regs.Int32)
 
