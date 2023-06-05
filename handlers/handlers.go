@@ -43,6 +43,11 @@ func UsersHandler(body string, path string, method string, user string, id strin
 }
 
 func ProductsHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	fmt.Println("Handling request with Products Handler" + " > " + method)
+	switch method {
+	case "POST":
+		return routers.InsertProduct(body, user)
+	}
 	return 400, "Invalid method"
 }
 
