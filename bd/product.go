@@ -112,3 +112,25 @@ func UpdateProduct(product models.Product) error {
 	fmt.Println("Update product > Sucessfully")
 	return nil
 }
+
+func DeleteProduct(id int) error {
+	fmt.Println("Starting delete product")
+
+	err := DbConnect()
+	if err != nil {
+		return err
+	}
+
+	defer Db.Close()
+
+	query := "DELETE FROM products WHERE Prod_Id = " + strconv.Itoa(id)
+
+	_, err = Db.Exec(query)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+
+	fmt.Println("Delete product > Sucessfully")
+	return nil
+}

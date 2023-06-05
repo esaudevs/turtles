@@ -49,8 +49,23 @@ func UpdateProduct(body string, user string, id int) (int, string) {
 
 	queryError := bd.UpdateProduct(product)
 	if queryError != nil {
-		return 400, "Error trying to update product " + strconv.Itoa(product.ProdId) + " > " + err.Error()
+		return 400, "Error trying to update product " + strconv.Itoa(product.ProdId) + " > " + queryError.Error()
 	}
 
 	return 200, "Update Ok"
+}
+
+func DeleteProduct(user string, id int) (int, string) {
+
+	isAdmin, errorMessage := bd.IsUserAdmin(user)
+	if !isAdmin {
+		return 400, errorMessage
+	}
+
+	queryError := bd.DeleteProduct(id)
+	if queryError != nil {
+		return 400, "Error trying to delete product " + strconv.Itoa(id) + " > " + queryError.Error()
+	}
+
+	return 200, "Delete Ok"
 }
