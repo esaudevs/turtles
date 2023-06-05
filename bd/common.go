@@ -42,7 +42,7 @@ func ConnStr(key models.SecretRDSJson) string {
 	authToken = key.Password
 	dbEndpoint = key.Host
 	dbName = "turtles"
-	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true", dbUser, authToken, dbEndpoint, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?allowCleartextPasswords=true&parseTime=true", dbUser, authToken, dbEndpoint, dbName)
 	fmt.Println(dsn)
 	return dsn
 }
