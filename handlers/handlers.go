@@ -54,12 +54,13 @@ func ProductsHandler(body string, path string, method string, user string, id in
 	case "GET":
 		return routers.SelectProduct(request)
 	}
-	
+
 	return 400, "Invalid method"
 }
 
 func StocksHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
-	return 400, "Invalid method"
+	fmt.Println("Handling request with Stocks Handler" + " > " + method)
+	return routers.UpdateProductStock(body, user, id)
 }
 
 func AddressesHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {

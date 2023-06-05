@@ -125,3 +125,26 @@ func SelectProduct(request events.APIGatewayV2HTTPRequest) (int, string) {
 
 	return 200, string(productList)
 }
+
+func UpdateProductStock(body string, user string, id int) (int, string) {
+	var product models.Product
+
+	err := json.Unmarshal([]byte(body), &product)
+	if err != nil {
+		return 400, "Error in data received" + err.Error()
+	}
+
+	isAdmin, errorMessage := bd.IsUserAdmin(user)
+	if !isAdmin {
+		return 400, errorMessage
+	}
+
+	product.ProdId = id
+
+	queryError := bd.UpdateProductStock(product)
+	if queryError != nil {
+		return 400, "Error trying to update product stock " + strconv.Itoa(product.ProdId) + " > " + queryError.Error()
+	}
+
+	return 200, "Update Ok"
+}
