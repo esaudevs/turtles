@@ -239,6 +239,10 @@ func SelectProduct(product models.Product, choice string, page int, pageSize int
 	fmt.Println(query)
 
 	rows, err = Db.Query(query)
+	if err != nil {
+		fmt.Println(err.Error())
+		return resp, err
+	}
 
 	for rows.Next() {
 		var product models.Product
