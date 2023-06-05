@@ -103,6 +103,8 @@ func UpdateProduct(product models.Product) error {
 
 	query += "WHERE Prod_Id = " + strconv.Itoa(product.ProdId)
 
+	fmt.Println(query)
+
 	_, err = Db.Exec(query)
 	if err != nil {
 		fmt.Println(err.Error())

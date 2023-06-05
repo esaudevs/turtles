@@ -27,7 +27,7 @@ func CreateQuery(queryString string, fieldName string, typeField string, ValueN 
 		return queryString
 	}
 
-	if !strings.HasSuffix(queryString, "SET") {
+	if !strings.HasSuffix(queryString, "SET ") {
 		queryString += ", "
 	}
 
@@ -37,7 +37,7 @@ func CreateQuery(queryString string, fieldName string, typeField string, ValueN 
 	case "N":
 		queryString += fieldName + " = " + strconv.Itoa(ValueN)
 	case "F":
-		queryString += fieldName + " = '" + strconv.FormatFloat(ValueF, 'e', -1, 64)
+		queryString += fieldName + " = " + strconv.FormatFloat(ValueF, 'e', -1, 64)
 	}
 
 	return queryString
