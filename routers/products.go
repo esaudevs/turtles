@@ -2,8 +2,11 @@ package routers
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
+	"strings"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/esaudevs/turtles/bd"
 	"github.com/esaudevs/turtles/models"
 )
@@ -68,4 +71,57 @@ func DeleteProduct(user string, id int) (int, string) {
 	}
 
 	return 200, "Delete Ok"
+}
+
+func SelectProduct(request events.APIGatewayV2HTTPRequest) (int, string) {
+	var product models.Product
+	var page, pageSize int
+	var orderType, orderField string
+
+	param := request.QueryStringParameters
+
+	page, _ = strconv.Atoi(param["page"])
+	pageSize, _ = strconv.Atoi(param["pageSize"])
+	orderType = param["orderType"] // D = DESC, A or Nil = ASC
+	orderField = param["orderField"] // I Id, T Title, D Desc, F CreatedAt, P Price, C categId, S Stock
+
+	if !strings.Contains("ITDFPCS", orderField) {
+		orderField = ""
+	}
+
+	var choice string
+	if len(param["prodId"]) > 0 {
+		choice="P"
+		product.ProdId, _ = strconv.Atoi(param["prodId"])
+	}
+	if len(param["search"]) > 0 {
+		choice="S"
+		product.ProdSearch, _ = param["search"]
+	}
+	if len(param["categId"]) > 0 {
+		choice="C"
+		product.ProdCategId, _ = strconv.Atoi(param["categId"])
+	}
+	if len(param["slug"]) > 0 {
+		choice="U"
+		product.ProdPath, _ = param["slug"]
+	}
+	if len(param["slugCateg"]) > 0 {
+		choice="K"
+		product.ProdCategPath, _ = param["slugCateg"]
+	}
+
+	fmt.Println(param)
+
+	result, queryErr := bd.SelectProduct(product, choice, page, pageSize, orderType, orderField)
+	if queryErr != nil {
+		return 400, "Error trying to get result of type '" + choice + "' " + queryErr.Error() 
+	}
+
+	productList, formatErr := json.Marshal(result)
+	if formatErr != nil {
+		return 400, "Error trying to parse products to Json"
+	}
+
+	return 200, string(productList)
 }

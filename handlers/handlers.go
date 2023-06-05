@@ -51,7 +51,10 @@ func ProductsHandler(body string, path string, method string, user string, id in
 		return routers.UpdateProduct(body, user, id)
 	case "DELETE":
 		return routers.DeleteProduct(user, id)
+	case "GET":
+		return routers.SelectProduct(request)
 	}
+	
 	return 400, "Invalid method"
 }
 
