@@ -94,12 +94,12 @@ func UpdateProduct(product models.Product) error {
 
 	query := "UPDATE products SET "
 
-	query += tools.CreateQuery(query, "Prod_Title", "S", 0, 0, product.ProdTitle)
-	query += tools.CreateQuery(query, "Prod_Description", "S", 0, 0, product.ProdDescription)
-	query += tools.CreateQuery(query, "Prod_Price", "F", 0, product.ProdPrice, "")
-	query += tools.CreateQuery(query, "Prod_CategoryId", "N", product.ProdCategId, 0, "")
-	query += tools.CreateQuery(query, "Prod_Stock", "N", product.ProdStock, 0, "")
-	query += tools.CreateQuery(query, "Prod_Path", "S", 0,0, product.ProdPath)
+	query = tools.CreateQuery(query, "Prod_Title", "S", 0, 0, product.ProdTitle)
+	query = tools.CreateQuery(query, "Prod_Description", "S", 0, 0, product.ProdDescription)
+	query = tools.CreateQuery(query, "Prod_Price", "F", 0, product.ProdPrice, "")
+	query = tools.CreateQuery(query, "Prod_CategoryId", "N", product.ProdCategId, 0, "")
+	query = tools.CreateQuery(query, "Prod_Stock", "N", product.ProdStock, 0, "")
+	query = tools.CreateQuery(query, "Prod_Path", "S", 0, 0, product.ProdPath)
 
 	query += "WHERE Prod_Id = " + strconv.Itoa(product.ProdId)
 
