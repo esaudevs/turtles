@@ -47,6 +47,8 @@ func ProductsHandler(body string, path string, method string, user string, id in
 	switch method {
 	case "POST":
 		return routers.InsertProduct(body, user)
+	case "PUT":
+		return routers.UpdateProduct(body, user, id)
 	}
 	return 400, "Invalid method"
 }
