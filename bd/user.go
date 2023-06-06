@@ -103,7 +103,7 @@ func SelectUsers(page int) (models.UsersList, error) {
 	var queryCount string = "SELECT count(*) FROM users"
 
 	query = "SELECT * FROM users LIMIT 10"
-	if offset > 0 {
+	if offset > 1 {
 		query += " OFFSET " + strconv.Itoa(offset)
 	}
 
