@@ -76,3 +76,34 @@ func IsUserAdmin(userUUID string) (bool, string) {
 
 	return false, "User has not admin privileges"
 }
+
+func UserExists(userUUID string) (error, bool) {
+	fmt.Println("Starting userExists")
+
+	err := DbConnect()
+	if err != nil {
+		return err, false
+	}
+
+	defer Db.Close()
+
+	query := "SELECT 1 FROM users WHERE User_UUID = '" + userUUID + "'"
+	fmt.Println(query)
+
+	rows, queryErr := Db.Query(query)
+	if queryErr != nil {
+		return err, false
+	}
+
+	var value string
+	rows.Next()
+	rows.Scan(&value)
+
+	fmt.Println("UserExists > Sucessfully")
+
+	if value == "1" {
+		return nil, true
+	}
+
+	return nil, false
+}

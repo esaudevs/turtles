@@ -39,6 +39,21 @@ func Handlers(path string, method string, body string, headers map[string]string
 }
 
 func UsersHandler(body string, path string, method string, user string, id string, request events.APIGatewayV2HTTPRequest) (int, string) {
+	if path == "/user/me" {
+		switch method {
+		case "PUT":
+			return routers.UpdateUser(body, user)
+		case "GET":
+			return routers.SelectUser(body, user)
+		}
+	}
+
+	if path == "/users" {
+		if method == "GET" {
+			return routers.SelectUsers(body, user, request)
+		}
+	}
+
 	return 400, "Invalid method"
 }
 
