@@ -39,6 +39,8 @@ func Handlers(path string, method string, body string, headers map[string]string
 }
 
 func UsersHandler(body string, path string, method string, user string, id string, request events.APIGatewayV2HTTPRequest) (int, string) {
+	fmt.Println("Handling request with Users Handler" + " > " + method)
+
 	if path == "/user/me" {
 		switch method {
 		case "PUT":
@@ -79,6 +81,19 @@ func StocksHandler(body string, path string, method string, user string, id int,
 }
 
 func AddressesHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	fmt.Println("Handling request with Addresses Handler" + " > " + method)
+
+	switch method {
+	case "POST":
+		return routers.InsertAddress(body, user)
+	case "PUT":
+		return routers.UpdateAddress(body, user, id)
+	case "DELETE":
+		return routers.DeleteAddress(user, id)
+	case "GET":
+		return routers.SelectAddress(user)
+	}
+
 	return 400, "Invalid method"
 }
 
