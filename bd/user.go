@@ -104,7 +104,7 @@ func SelectUsers(page int) (models.UsersList, error) {
 
 	query = "SELECT * FROM users LIMIT 10"
 	if offset > 0 {
-		query = " OFFSET" + strconv.Itoa(offset)
+		query = " OFFSET " + strconv.Itoa(offset)
 	}
 
 	var rowsCount *sql.Rows
