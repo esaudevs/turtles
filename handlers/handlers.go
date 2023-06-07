@@ -114,6 +114,14 @@ func CategoriesHandler(body string, path string, method string, user string, id 
 }
 
 func OrdersHandler(body string, path string, method string, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	fmt.Println("Handling request with Orders Handler" + " > " + method)
+	switch method {
+	case "POST":
+		return routers.InsertOrder(body, user)
+	case "GET":
+		return routers.SelectOrders(user, request)
+	}
+
 	return 400, "Invalid method"
 }
 
