@@ -120,7 +120,7 @@ func SelectOrders(user string, fromDate string, untilDate string, page int, orde
 		order.Order_AddId = int(orderAddId.Int32)
 
 		var rowsDetails *sql.Rows
-		queryDetails := "SELECT OD_Id, OD_ProdId, OD_Quantity, OD_Price FROM orders_details WHERE OD_OrderId = " + strconv.Itoa(order.Order_Id)
+		queryDetails := "SELECT OD_Id, OD_ProdId, OD_Quantity, OD_Price FROM orders_detail WHERE OD_OrderId = " + strconv.Itoa(order.Order_Id)
 		rowsDetails, err = Db.Query(queryDetails)
 		if err != nil {
 			return orders, err
