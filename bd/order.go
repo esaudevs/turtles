@@ -111,13 +111,13 @@ func SelectOrders(user string, fromDate string, untilDate string, page int, orde
 
 	for rows.Next() {
 		var order models.Order
-		var orderDate sql.NullTime
 		var orderAddId sql.NullInt32
-		err := rows.Scan(&order.Order_Id, &order.Order_UserUUID, &orderAddId, &orderDate, &order.Order_Total)
+
+		err := rows.Scan(&order.Order_Id, &order.Order_UserUUID, &orderAddId, &order.Order_Date, &order.Order_Total)
 		if err != nil {
 			return orders, err
 		}
-		order.Order_Date = orderDate.Time.String()
+
 		order.Order_AddId = int(orderAddId.Int32)
 
 		var rowsDetails *sql.Rows
