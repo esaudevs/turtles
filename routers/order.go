@@ -53,7 +53,7 @@ func SelectOrders(user string, request events.APIGatewayV2HTTPRequest) (int, str
 
 	result, queryErr := bd.SelectOrders(user, fromDate, untilDate, page, orderId)
 	if queryErr != nil {
-		return 400, "There was an error trying to get orders"
+		return 400, "There was an error trying to get orders " + queryErr.Error() 
 	}
 
 	orders, jsonErr := json.Marshal(result)

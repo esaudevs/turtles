@@ -60,12 +60,12 @@ func SelectOrders(user string, fromDate string, untilDate string, page int, orde
 	if orderId > 0 {
 		query += " WHERE Order_Id = " + strconv.Itoa(orderId)
 	} else {
-		offset := 0 
+		offset := 0
 		if page == 0 {
-			page =1
+			page = 1
 		}
 		if page > 1 {
-			offset = (10*(page - 1))
+			offset = (10 * (page - 1))
 		}
 
 		if len(untilDate) == 10 {
@@ -73,7 +73,6 @@ func SelectOrders(user string, fromDate string, untilDate string, page int, orde
 		}
 		var where string
 		var whereUser string = " Order_UserUUID = '" + user + "'"
-
 
 		if len(fromDate) > 0 && len(untilDate) > 0 {
 			where += " WHERE Order_Date BETWEEN '" + fromDate + "' AND '" + untilDate + "' "
@@ -90,7 +89,7 @@ func SelectOrders(user string, fromDate string, untilDate string, page int, orde
 		}
 
 		query += where + limit
- 	}
+	}
 
 	fmt.Println(query)
 
@@ -147,7 +146,7 @@ func SelectOrders(user string, fromDate string, untilDate string, page int, orde
 			order.OrderDetails = append(order.OrderDetails, orderDetail)
 		}
 
-		orders = append(orders, order) 
+		orders = append(orders, order)
 		rowsDetails.Close()
 	}
 
